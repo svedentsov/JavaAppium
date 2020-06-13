@@ -42,10 +42,13 @@ public class FirstTest {
 //        WebElement element_to_enter_search_line = driver.findElementById("org.wikipedia:id/search_src_text");
         WebElement element_to_enter_search_line = waitForElementPresentById(
                 "org.wikipedia:id/search_src_text",
-                "Cannot find search input",
-                5
+                "Cannot find search input"
         );
         element_to_enter_search_line.sendKeys("Appium");
+    }
+
+    private WebElement waitForElementPresentById(String id, String error_massage) {
+        return waitForElementPresentById(id, error_massage, 5);
     }
 
     private WebElement waitForElementPresentById(String id, String error_massage, long timeoutInSeconds) {
