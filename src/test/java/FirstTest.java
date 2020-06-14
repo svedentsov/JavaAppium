@@ -36,25 +36,29 @@ public class FirstTest {
     }
 
     @Test
-    public void firstTest() throws InterruptedException {
+    public void firstTest() {
         WebElement element_to_init_search = driver.findElementByXPath("//*[contains(@text, 'Search Wikipedia')]");
         element_to_init_search.click();
-//        WebElement element_to_enter_search_line = driver.findElementById("org.wikipedia:id/search_src_text");
-        WebElement element_to_enter_search_line = waitForElementPresentById(
-                "org.wikipedia:id/search_src_text",
+        WebElement element_to_enter_search_line = waitForElementPresentByXpath(
+                "//*[contains(@text, 'Search')]",
                 "Cannot find search input"
         );
-        element_to_enter_search_line.sendKeys("Appium");
+        element_to_enter_search_line.sendKeys("Java");
+        waitForElementPresentByXpath(
+                "//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']",
+                "Connot find 'Object-oriented programming language' topic searching by 'Java'",
+                15
+        );
     }
 
-    private WebElement waitForElementPresentById(String id, String error_massage) {
-        return waitForElementPresentById(id, error_massage, 5);
+    private WebElement waitForElementPresentByXpath(String xpath, String error_massage) {
+        return waitForElementPresentByXpath(xpath, error_massage, 5);
     }
 
-    private WebElement waitForElementPresentById(String id, String error_massage, long timeoutInSeconds) {
+    private WebElement waitForElementPresentByXpath(String xpath, String error_massage, long timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_massage + "\n");
-        By by = By.id(id);
+        By by = By.xpath(xpath);
         return wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
 }
