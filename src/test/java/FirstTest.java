@@ -1,6 +1,7 @@
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -82,6 +83,37 @@ public class FirstTest {
                 By.id("org.wikipedia:id/search_close_btn"),
                 "'X' is still present on the page",
                 5
+        );
+    }
+
+    @Test
+    public void testCompareArticleTitle() {
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find 'Search Wikipedia' input",
+                5
+        );
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text, 'Search')]"),
+                "Java",
+                "Cannot find search input",
+                5
+        );
+        waitForElementAndClick(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']"),
+                "Cannot find 'Search Wikipedia' input",
+                5
+        );
+        WebElement title_element = waitForElementPresent(
+                By.id("org.wikipedia:id/view_page_title_text"),
+                "Cannot find article title",
+                15
+        );
+        String article_title = title_element.getAttribute("text");
+        Assert.assertEquals(
+                "We see unexpected title",
+                "Java (programming language)",
+                article_title
         );
     }
 
