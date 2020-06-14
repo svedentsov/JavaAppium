@@ -37,13 +37,17 @@ public class FirstTest {
 
     @Test
     public void firstTest() {
-        WebElement element_to_init_search = driver.findElementByXPath("//*[contains(@text, 'Search Wikipedia')]");
-        element_to_init_search.click();
-        WebElement element_to_enter_search_line = waitForElementPresentByXpath(
-                "//*[contains(@text, 'Search')]",
-                "Cannot find search input"
+        waitForElementByXpathAndClick(
+                "//*[contains(@text, 'Search Wikipedia')]",
+                "Cannot find 'Search Wikipedia' input",
+                5
         );
-        element_to_enter_search_line.sendKeys("Java");
+        waitForElementByXpathAndSendKeys(
+                "//*[contains(@text, 'Search')]",
+                "Java",
+                "Cannot find search input",
+                5
+        );
         waitForElementPresentByXpath(
                 "//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']",
                 "Connot find 'Object-oriented programming language' topic searching by 'Java'",
@@ -51,8 +55,16 @@ public class FirstTest {
         );
     }
 
-    private WebElement waitForElementPresentByXpath(String xpath, String error_massage) {
-        return waitForElementPresentByXpath(xpath, error_massage, 5);
+    private WebElement waitForElementByXpathAndSendKeys(String xpath, String value, String error_massage, long timeoutInSeconds) {
+        WebElement element = waitForElementPresentByXpath(xpath, error_massage, timeoutInSeconds);
+        element.sendKeys(value);
+        return element;
+    }
+
+    private WebElement waitForElementByXpathAndClick(String xpath, String error_massage, long timeoutInSeconds) {
+        WebElement element = waitForElementPresentByXpath(xpath,error_massage,timeoutInSeconds);
+        element.click();
+        return element;
     }
 
     private WebElement waitForElementPresentByXpath(String xpath, String error_massage, long timeoutInSeconds) {
@@ -60,5 +72,9 @@ public class FirstTest {
         wait.withMessage(error_massage + "\n");
         By by = By.xpath(xpath);
         return wait.until(ExpectedConditions.presenceOfElementLocated(by));
+    }
+
+    private WebElement waitForElementPresentByXpath(String xpath, String error_massage) {
+        return waitForElementPresentByXpath(xpath, error_massage, 5);
     }
 }
