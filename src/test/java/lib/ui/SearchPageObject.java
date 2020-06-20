@@ -4,7 +4,6 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 
 public class SearchPageObject extends MainPageObject {
-
     private static final String
             SEARCH_INIT_ELEMENT = "//*[contains(@text, 'Search Wikipedia')]",
             SEARCH_INPUT = "//*[contains(@text, 'Search')]",
