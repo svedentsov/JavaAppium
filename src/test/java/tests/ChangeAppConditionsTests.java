@@ -6,7 +6,6 @@ import lib.ui.SearchPageObject;
 import org.junit.Test;
 
 public class ChangeAppConditionsTests extends CoreTestCase {
-
     @Test
     public void testChangeScreenOrientationOnSearchResult() {
         SearchPageObject searchPageObject = new SearchPageObject(driver);

@@ -6,7 +6,6 @@ import lib.ui.SearchPageObject;
 import org.junit.Test;
 
 public class ArticleTests extends CoreTestCase {
-
     @Test
     public void testCompareArticle() {
         SearchPageObject searchPageObject = new SearchPageObject(driver);

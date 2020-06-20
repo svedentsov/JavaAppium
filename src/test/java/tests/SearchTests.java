@@ -5,7 +5,6 @@ import lib.ui.SearchPageObject;
 import org.junit.Test;
 
 public class SearchTests extends CoreTestCase {
-
     @Test
     public void testSearch() {
         SearchPageObject searchPageObject = new SearchPageObject(driver);
@@ -22,7 +21,6 @@ public class SearchTests extends CoreTestCase {
         searchPageObject.clickCancelSearch();
         searchPageObject.waitForCancelButtonDisappear();
     }
-
 
     @Test
     public void testAmountOfNotEmptySearch() {
