@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class ArticlePageObject extends MainPageObject {
+
     private static final String
             TITLE = "org.wikipedia:id/view_page_title_text",
             FOOTER_ELEMENT = "//*[@text='View page in browser']",
