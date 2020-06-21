@@ -4,7 +4,6 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
 
 public class ArticlePageObject extends MainPageObject {
-
     private static final String
             TITLE = "id:org.wikipedia:id/view_page_title_text",
             FOOTER_ELEMENT = "xpath://*[@text='View page in browser']",

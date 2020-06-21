@@ -3,7 +3,6 @@ package lib.ui;
 import io.appium.java_client.AppiumDriver;
 
 public class WelcomePageObject extends MainPageObject {
-
     private static final String
             STEP_LEARN_MORE_LINK = "id:Learn more about Wikipedia",
             STEP_WAIT_FOR_NEW_WAY_TO_EXPLORE_TEXT = "id:New ways to explore",
