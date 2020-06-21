@@ -13,6 +13,18 @@ public class Platform {
             PLATFORM_ANDROID = "android",
             APPIUM_URL = "http://127.0.0.1:4723/wd/hub";
 
+    private static Platform instance;
+
+    private Platform() {
+    }
+
+    public static Platform getInstance() {
+        if (instance == null) {
+            instance = new Platform();
+        }
+        return instance;
+    }
+
     public AppiumDriver getDriver() throws Exception {
         URL url = new URL(APPIUM_URL);
         if (this.isAndroid()) {

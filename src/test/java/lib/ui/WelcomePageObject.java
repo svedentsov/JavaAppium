@@ -8,9 +8,9 @@ public class WelcomePageObject extends MainPageObject {
             STEP_WAIT_FOR_NEW_WAY_TO_EXPLORE_TEXT = "id:New ways to explore",
             STEP_ADD_OR_EDIT_PREFERRED_LANG_LINK = "id:Add or edit preferred languages",
             STEP_LEARN_MORE_ABOUT_DATA_COLLECTED = "id:Learn more about data collected",
-            NEXT_BUTTON = "Next",
-            GET_STARTED_BUTTON = "Get started",
-            SKIP_BUTTON = "Skip";
+            NEXT_LINK = "id:Next",
+            GET_STARTED_BUTTON = "id:Get started",
+            SKIP = "id:Skip";
 
     public WelcomePageObject(AppiumDriver driver) {
         super(driver);
@@ -46,7 +46,7 @@ public class WelcomePageObject extends MainPageObject {
 
     public void clickNextButton() {
         this.waitForElementAndClick(
-                NEXT_BUTTON,
+                NEXT_LINK,
                 "Cannot find 'Next' button",
                 10);
     }
@@ -60,8 +60,8 @@ public class WelcomePageObject extends MainPageObject {
 
     public void clickSkip() {
         this.waitForElementAndClick(
-                SKIP_BUTTON,
-                "Cannot find 'Skip' button on iOS",
+                SKIP,
+                "Cannot find and click skip button",
                 5);
     }
 }
