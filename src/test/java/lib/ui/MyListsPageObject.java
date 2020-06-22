@@ -1,14 +1,14 @@
 package lib.ui;
 
-import io.appium.java_client.AppiumDriver;
 import lib.Platform;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 abstract public class MyListsPageObject extends MainPageObject {
     protected static String
             FOLDER_BY_NAME_TPL,
             ARTICLE_BY_TITLE_TPL;
 
-    public MyListsPageObject(AppiumDriver driver) {
+    public MyListsPageObject(RemoteWebDriver driver) {
         super(driver);
     }
 
