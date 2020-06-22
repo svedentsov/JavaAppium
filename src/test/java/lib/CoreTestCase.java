@@ -16,6 +16,7 @@ public class CoreTestCase extends TestCase {
         driver = Platform.getInstance().getDriver();
         this.rotateScreenPortrait();
         this.skipWelcomePageForIOSApp();
+        this.openWiKiWebPageForMobileWeb();
     }
 
     @Override
@@ -48,6 +49,14 @@ public class CoreTestCase extends TestCase {
             driver.runAppInBackground(seconds);
         } else {
             System.out.println("Method rotateScreenPortrait() does nothing for platform " + Platform.getInstance().getPlatformVar());
+        }
+    }
+
+    protected void openWiKiWebPageForMobileWeb() {
+        if (Platform.getInstance().isMW()) {
+            driver.get("https://en.m.wikipedia.org");
+        } else {
+            System.out.println("Method openWiKiWebPageForMobileWeb() does nothing for Platform: " + Platform.getInstance().getPlatformVar());
         }
     }
 
