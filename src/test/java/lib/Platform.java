@@ -37,7 +37,7 @@ public class Platform {
         } else if (this.isIOS()) {
             return new IOSDriver(url, this.getIOSDesiredCapabilities());
         } else if (this.isMW()) {
-            return new ChromeDriver(this.getMwChromeOptions());
+            return new ChromeDriver(this.getMWChromeOptions());
         } else {
             throw new Exception("Cannot get run platform from env variable. Platform value: " + this.getPlatformVar());
         }
@@ -76,22 +76,20 @@ public class Platform {
         return capabilities;
     }
 
-    private ChromeOptions getMwChromeOptions() {
-        Map<String, Object> deviceMetrics = new HashMap<>();
+    private ChromeOptions getMWChromeOptions() {
+        Map<String, Object> deviceMetrics = new HashMap<String, Object>();
         deviceMetrics.put("width", 360);
-        deviceMetrics.put("height", 640);
+        deviceMetrics.put("heigth", 640);
         deviceMetrics.put("pixelRatio", 3.0);
 
-        Map<String, Object> mobileEmulation = new HashMap<>();
+        Map<String, Object> mobileEmulation = new HashMap<String, Object>();
         mobileEmulation.put("deviceMetrics", deviceMetrics);
-        mobileEmulation.put("userAgent",
-                "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19");
+        mobileEmulation.put("userAgent", "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19");
 
-        ChromeOptions chromeoptions = new ChromeOptions();
-        chromeoptions.addArguments("window-size=340,640");
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("window-size=340,640");
 
-        return chromeoptions;
-
+        return chromeOptions;
     }
 
     private boolean isPlatform(String my_platform) {
