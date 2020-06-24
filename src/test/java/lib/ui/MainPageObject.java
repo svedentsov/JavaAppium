@@ -192,6 +192,26 @@ public class MainPageObject {
         return elements.size();
     }
 
+    public boolean isElementPresent(String locator) {
+        return getAmountOfElements(locator) > 0;
+    }
+
+    public void tryClickElementWithFewAttemps(String locator, String error_message, int amount_of_attempts) {
+        int current_attemps = 0;
+        boolean need_more_attemps = true;
+        while (need_more_attemps) {
+            try {
+                this.waitForElementAndClick(locator, error_message, 2);
+                need_more_attemps = false;
+            } catch (Exception e) {
+                if (current_attemps > amount_of_attempts) {
+                    this.waitForElementAndClick(locator, error_message, 2);
+                }
+            }
+            ++current_attemps;
+        }
+    }
+
     public void assertElementNotPresent(String locator, String error_messge) {
         int amount_of_element = getAmountOfElements(locator);
         if (amount_of_element > 0) {
