@@ -27,21 +27,41 @@ abstract public class MyListsPageObject extends MainPageObject {
     }
     /* TEMPLATES METHODS */
 
+    /**
+     * Открыть папку со статьями, для Android.
+     *
+     * @param name_of_folder имя папки
+     */
     public void openFolderByName(String name_of_folder) {
         String folder_name_xpath = getFolderXpathByName(name_of_folder);
         this.waitForElementAndClick(folder_name_xpath, "Cannot find folder by name" + name_of_folder, 5);
     }
 
+    /**
+     * Ожидание полной загрузки статьи в папке (в списке) и проверка на присутствие статьи в списке.
+     *
+     * @param article_title название статьи
+     */
     public void waitForArticleToAppearByTitle(String article_title) {
         String article_xpath = getSavedArticleXpathByTitle(article_title);
         this.waitForElementPresent(article_xpath, "Cannot find saved article by title", 15);
     }
 
+    /**
+     * Ожидание полной загрузки статьи в папке (в списке) и проверка на отсутствие статьи в списке.
+     *
+     * @param article_title название статьи
+     */
     public void waitForArticleToDisappearByTitle(String article_title) {
         String article_xpath = getSavedArticleXpathByTitle(article_title);
         this.waitForElementNotPresent(article_xpath, "Saved article is still present with the title", 15);
     }
 
+    /**
+     * Свайп статьи в списке влево и удаление ее.
+     *
+     * @param article_title название статьи
+     */
     public void swipeArticleToDelete(String article_title) {
         this.waitForArticleToAppearByTitle(article_title);
         String article_xpath = getSavedArticleXpathByTitle(article_title);

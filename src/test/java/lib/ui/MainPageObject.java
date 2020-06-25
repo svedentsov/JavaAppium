@@ -16,49 +16,101 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class MainPageObject {
-
     protected RemoteWebDriver driver;
 
     public MainPageObject(RemoteWebDriver driver) {
         this.driver = driver;
     }
 
-    public WebElement waitForElementPresent(String locator, String error_massage, long timeoutInSeconds) {
+    /**
+     * Ожидание появления элемента.
+     *
+     * @param locator          локатор
+     * @param error_message    текст ошибки
+     * @param timeoutInSeconds время ожидания
+     * @return
+     */
+    public WebElement waitForElementPresent(String locator, String error_message, long timeoutInSeconds) {
         By by = this.getLocatorByString(locator);
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
-        wait.withMessage(error_massage + "\n");
+        wait.withMessage(error_message + "\n");
         return wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
-    public WebElement waitForElementPresent(String locator, String error_massage) {
-        return waitForElementPresent(locator, error_massage, 5);
+    /**
+     * Ожидание появления элемента (таймаут по умолчанию 5 секунд).
+     *
+     * @param locator       локатор
+     * @param error_message текст ошибки
+     * @return
+     */
+    public WebElement waitForElementPresent(String locator, String error_message) {
+        return waitForElementPresent(locator, error_message, 5);
     }
 
-    public WebElement waitForElementAndClick(String locator, String error_massage, long timeoutInSeconds) {
-        WebElement element = waitForElementPresent(locator, error_massage, timeoutInSeconds);
+    /**
+     * Нажать по элемент.
+     *
+     * @param locator          локатор
+     * @param error_message    текст ошибки
+     * @param timeoutInSeconds время ожидания
+     * @return
+     */
+    public WebElement waitForElementAndClick(String locator, String error_message, long timeoutInSeconds) {
+        WebElement element = waitForElementPresent(locator, error_message, timeoutInSeconds);
         element.click();
         return element;
     }
 
-    public WebElement waitForElementAndSendKeys(String locator, String value, String error_massage, long timeoutInSeconds) {
-        WebElement element = waitForElementPresent(locator, error_massage, timeoutInSeconds);
+    /**
+     * Ввести значение в поле ввода.
+     *
+     * @param locator          локатор
+     * @param value            вводимое значение
+     * @param error_message    текст ошибки
+     * @param timeoutInSeconds время ожидания
+     * @return
+     */
+    public WebElement waitForElementAndSendKeys(String locator, String value, String error_message, long timeoutInSeconds) {
+        WebElement element = waitForElementPresent(locator, error_message, timeoutInSeconds);
         element.sendKeys(value);
         return element;
     }
 
-    public Boolean waitForElementNotPresent(String locator, String error_massage, long timeoutInSeconds) {
+    /**
+     * Проверить отсутствие элемента.
+     *
+     * @param locator          локатор
+     * @param error_message    текст ошибки
+     * @param timeoutInSeconds время ожидания
+     * @return
+     */
+    public Boolean waitForElementNotPresent(String locator, String error_message, long timeoutInSeconds) {
         By by = this.getLocatorByString(locator);
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
-        wait.withMessage(error_massage + "\n");
+        wait.withMessage(error_message + "\n");
         return wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
     }
 
-    public WebElement waitForElementAndClear(String locator, String error_massage, long timeoutInSeconds) {
-        WebElement element = waitForElementPresent(locator, error_massage);
+    /**
+     * Удалить текст.
+     *
+     * @param locator          локатор
+     * @param error_message    текст ошибки
+     * @param timeoutInSeconds время ожидания
+     * @return
+     */
+    public WebElement waitForElementAndClear(String locator, String error_message, long timeoutInSeconds) {
+        WebElement element = waitForElementPresent(locator, error_message);
         element.clear();
         return element;
     }
 
+    /**
+     * Скролл.
+     *
+     * @param timeOfSwipe время скролла
+     */
     public void swipeUp(int timeOfSwipe) {
         if (driver instanceof AppiumDriver) {
             TouchAction action = new TouchAction((AppiumDriver) driver);
@@ -77,10 +129,16 @@ public class MainPageObject {
         }
     }
 
+    /**
+     * Быстрый скрол на основе обычного.
+     */
     public void swipeUpQuick() {
         swipeUp(200);
     }
 
+    /**
+     * Эмуляция скрола для веб.
+     */
     public void scrollWebPageUp() {
         if (Platform.getInstance().isMW()) {
             JavascriptExecutor jsExcecutor = (JavascriptExecutor) driver;
@@ -90,6 +148,13 @@ public class MainPageObject {
         }
     }
 
+    /**
+     * Скролл пока элемент на странице не будет виден.
+     *
+     * @param locator       локатор
+     * @param error_message текст ошибки
+     * @param max_swipes    максимальное количество свайпов
+     */
     public void scrollWebPageTillElementNotVisible(String locator, String error_message, int max_swipes) {
         int alreasy_swiped = 0;
         WebElement element = this.waitForElementPresent(locator, error_message);
@@ -109,6 +174,13 @@ public class MainPageObject {
         }
     }
 
+    /**
+     * Свайп веб-страницы до появления элемента.
+     *
+     * @param locator       локатор
+     * @param error_message текст ошибки
+     * @param max_swipes    максимальное количество свайпов
+     */
     public void swipeUpFindElement(String locator, String error_message, int max_swipes) {
         By by = this.getLocatorByString(locator);
         int already_swiped = 0;
@@ -121,6 +193,13 @@ public class MainPageObject {
         }
     }
 
+    /**
+     * Скролл пока элемент на странице не будет виден (метод для iOS платформы).
+     *
+     * @param locator       локатор
+     * @param error_message текст ошибки
+     * @param max_swipes    максимальное количество свайпов
+     */
     public void swipeUpTillElementAppear(String locator, String error_message, int max_swipes) {
         int already_swiped = 0;
         while (!this.isElementLocatedOnTheScreen(locator)) {
@@ -132,6 +211,12 @@ public class MainPageObject {
         }
     }
 
+    /**
+     * Метода сравнивает фактическое расположение объекта по оси Y относительно видимой части экрана.
+     *
+     * @param locator локатор
+     * @return true когда объект будет виден на экране пользователя.
+     */
     public boolean isElementLocatedOnTheScreen(String locator) {
         int element_location_by_y = this.waitForElementPresent(locator, "Cannot find element by locator", 5).getLocation().getY();
         if (Platform.getInstance().isMW()) {
@@ -162,6 +247,12 @@ public class MainPageObject {
         }
     }
 
+    /**
+     * Метода для совершения свайпа по элементу справа на лево
+     *
+     * @param locator      локатор
+     * @param error_string текст ошибки
+     */
     public void swipeElementToLeft(String locator, String error_string) {
         if (driver instanceof AppiumDriver) {
             WebElement element = waitForElementPresent(locator, error_string, 10);
@@ -186,16 +277,35 @@ public class MainPageObject {
         }
     }
 
+    /**
+     * Метод возвращает число элементов, найденных на странице.
+     *
+     * @param locator локатор
+     * @return количество найденных элементов
+     */
     public int getAmountOfElements(String locator) {
         By by = this.getLocatorByString(locator);
         List elements = driver.findElements(by);
         return elements.size();
     }
 
+    /**
+     * Метод проверяет есть ли элемент на странице для веб.
+     *
+     * @param locator локатор
+     * @return
+     */
     public boolean isElementPresent(String locator) {
         return getAmountOfElements(locator) > 0;
     }
 
+    /**
+     * Метод кликает несколько раз по элементу, даже если первый раз клик был не успешным.
+     *
+     * @param locator            локатор
+     * @param error_message      текст ошибки
+     * @param amount_of_attempts количество попыток
+     */
     public void tryClickElementWithFewAttemps(String locator, String error_message, int amount_of_attempts) {
         int current_attemps = 0;
         boolean need_more_attemps = true;
@@ -212,11 +322,17 @@ public class MainPageObject {
         }
     }
 
-    public void assertElementNotPresent(String locator, String error_messge) {
+    /**
+     * Метод проверяет  наличия элемента на странице.
+     *
+     * @param locator       локатор
+     * @param error_message текст ошибки
+     */
+    public void assertElementNotPresent(String locator, String error_message) {
         int amount_of_element = getAmountOfElements(locator);
         if (amount_of_element > 0) {
             String default_result = "An element '" + locator + "' supposed to be not present";
-            throw new AssertionError(default_result + " " + error_messge);
+            throw new AssertionError(default_result + " " + error_message);
         }
     }
 
@@ -225,6 +341,12 @@ public class MainPageObject {
         return element.getAttribute(attribute);
     }
 
+    /**
+     * Метод для построения локатора. В него передается строка, которая парсится и возвращается как By.
+     *
+     * @param locator_with_type локатор с указанием типа локатора
+     * @return
+     */
     public By getLocatorByString(String locator_with_type) {
         String[] exploded_locator = locator_with_type.split(Pattern.quote(":"), 2);
         String by_type = exploded_locator[0];

@@ -35,6 +35,9 @@ abstract public class ArticlePageObject extends MainPageObject {
         }
     }
 
+    /**
+     * Свайп от начала статья до конца, пока не появится заданный элемент.
+     */
     public void swipeToFooter() {
         if (Platform.getInstance().isAndroid()) {
             this.swipeUpFindElement(FOOTER_ELEMENT, "Cannot find the end of the article", 40);
@@ -45,6 +48,11 @@ abstract public class ArticlePageObject extends MainPageObject {
         }
     }
 
+    /**
+     * Добавление статьи для Android.
+     *
+     * @param name_of_folder название папки
+     */
     public void addArticleToMyList(String name_of_folder) {
         this.waitForElementAndClick(OPTION_BUTTON, "Cannot find button to open article options", 5);
         this.waitForElementAndClick(OPTIONS_ADD_TO_MY_LIST_BUTTON, "Cannot find option to add article to reading list", 5);
@@ -54,6 +62,9 @@ abstract public class ArticlePageObject extends MainPageObject {
         this.waitForElementAndClick(MY_LIST_OK_BUTTON, "Cannot press 'OK' button", 5);
     }
 
+    /**
+     * Добавление статьи для Веб.
+     */
     public void addArticleToMySaved() {
         if (Platform.getInstance().isMW()) {
             this.removeArticleFromSavedIfItAdded();
@@ -61,6 +72,9 @@ abstract public class ArticlePageObject extends MainPageObject {
         this.waitForElementAndClear(OPTIONS_ADD_TO_MY_LIST_BUTTON, "Cannot find option to add article to reading list", 5);
     }
 
+    /**
+     * Удаление статьи, если она уже была добавлена ранее.
+     */
     public void removeArticleFromSavedIfItAdded() {
         if (this.isElementPresent(OPTIONS_REMOVE_FROM_MY_LIST_BUTTON)) {
             this.waitForElementAndClick(OPTIONS_REMOVE_FROM_MY_LIST_BUTTON, "Cannot click button to remove an article from saved", 2);
@@ -68,6 +82,9 @@ abstract public class ArticlePageObject extends MainPageObject {
         }
     }
 
+    /**
+     * Закрыть статью.
+     */
     public void closeArticle() {
         if (Platform.getInstance().isIOS() || Platform.getInstance().isAndroid()) {
             this.waitForElementAndClick(CLOSE_ARTICLE_BUTTON, "Cannot close article, cannot find X link", 5);

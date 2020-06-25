@@ -7,7 +7,6 @@ import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class CoreTestCase extends TestCase {
-
     protected RemoteWebDriver driver;
 
     @Override
